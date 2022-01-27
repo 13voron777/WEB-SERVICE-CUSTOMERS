@@ -40,8 +40,9 @@ public class UserHelper {
         Root<User> root = criteriaQuery.from(User.class);
 
         criteriaQuery.select(root)
-                .where(cb.and(cb.equal(root.get("user_name"), user.toUpperCase()),
-                        cb.equal(root.get("password"), password.toUpperCase())));
+                .where(cb.and(cb.equal(root.get("user_name"), user),
+                        cb.equal(root.get("password"), password)));
+
         Query query = session.createQuery(criteriaQuery);
         List<User> users = query.getResultList();
         session.close();
