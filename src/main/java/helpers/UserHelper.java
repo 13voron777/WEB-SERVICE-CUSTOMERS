@@ -1,5 +1,6 @@
 package helpers;
 
+import entity.Service;
 import entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -29,8 +30,29 @@ public class UserHelper {
         Session session = sessionFactory.openSession();
         CriteriaQuery<User> criteriaQuery = session.getCriteriaBuilder().createQuery(User.class);
         criteriaQuery.from(User.class);
-        List<User> users = session.createQuery(criteriaQuery).getResultList();
-        return users;
+        return session.createQuery(criteriaQuery).getResultList();
+    }
+
+    public User getUserById(int id){
+        Session session = sessionFactory.openSession();
+        return session.get(User.class, id);
+    }
+
+    public void updateUser(User user){
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.merge(user);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    public void deleteUserById(int idUser) {
+        Session session = sessionFactory.openSession();
+        User user = session.get(User.class, idUser);
+        session.beginTransaction();
+        session.delete(user);
+        session.getTransaction().commit();
+        session.close();
     }
 
     public User checkUserPassword(String user, String password){
@@ -47,5 +69,27 @@ public class UserHelper {
         List<User> users = query.getResultList();
         session.close();
         return users.size() == 0 ? null : users.get(0);
+    }
+
+    public void subscribeService(int idUser, int idService){
+        Session session = sessionFactory.openSession();
+        User user = session.get(User.class, idUser);
+        Service service = session.get(Service.class, idService);
+        user.getServices().add(service);
+        session.beginTransaction();
+        session.save(user);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    public void unsubscribeService(int idUser, int idService){
+        Session session = sessionFactory.openSession();
+        User user = session.get(User.class, idUser);
+        Service service = session.get(Service.class, idService);
+        user.getServices().remove(service);
+        session.beginTransaction();
+        session.save(user);
+        session.getTransaction().commit();
+        session.close();
     }
 }

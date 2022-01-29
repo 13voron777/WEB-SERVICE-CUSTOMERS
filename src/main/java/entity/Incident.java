@@ -80,6 +80,7 @@ public class Incident {
                 ", serviceName='" + serviceName + '\'' +
                 ", isActive=" + isActive +
                 ", problemDescription='" + problemDescription + '\'' +
+                ", username ='" + user.getUser_name() + '\'' +
                 '}';
     }
 }
