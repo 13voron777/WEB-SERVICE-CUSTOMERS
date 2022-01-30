@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 public class UserRole {
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private int id;
 
@@ -21,8 +21,7 @@ public class UserRole {
     public UserRole() {
     }
 
-    public UserRole(int id, String role_name, String role_description) {
-        this.id = id;
+    public UserRole(String role_name, String role_description) {
         this.role_name = role_name;
         this.role_description = role_description;
     }

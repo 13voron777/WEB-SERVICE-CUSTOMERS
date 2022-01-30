@@ -7,7 +7,7 @@ import java.util.List;
 @Entity
 public class Service {
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private int id;
 
@@ -29,8 +29,7 @@ public class Service {
     public Service() {
     }
 
-    public Service(int id, String serviceName, boolean isActive, double serviceMonthPrice, int customerId) {
-        this.id = id;
+    public Service(String serviceName, boolean isActive, double serviceMonthPrice, int customerId) {
         this.serviceName = serviceName;
         this.isActive = isActive;
         this.serviceMonthPrice = serviceMonthPrice;

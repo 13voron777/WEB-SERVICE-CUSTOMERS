@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 public class Profile {
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private int id;
 
@@ -30,8 +30,7 @@ public class Profile {
     public Profile() {
     }
 
-    public Profile(int id, String firstName, String lastName, String email, String phoneNumber, String postalCode) {
-        this.id = id;
+    public Profile(String firstName, String lastName, String email, String phoneNumber, String postalCode) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

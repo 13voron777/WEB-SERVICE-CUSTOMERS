@@ -7,11 +7,11 @@ import java.util.List;
 @Entity
 public class User {
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private int id;
 
-    @Column//(unique = true)
+    @Column
     private String user_name;
 
     @Column
@@ -21,7 +21,7 @@ public class User {
     @JoinColumn(name = "user_role_id")
     private UserRole userRole;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "profile_id")
     private Profile profile;
 
@@ -37,8 +37,7 @@ public class User {
     public User() {
     }
 
-    public User(int id, String user_name, String password, UserRole userRole, Profile profile) {
-        this.id = id;
+    public User(String user_name, String password, UserRole userRole, Profile profile) {
         this.user_name = user_name;
         this.password = password;
         this.userRole = userRole;

@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 public class Incident {
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private int id;
 
@@ -25,8 +25,7 @@ public class Incident {
     public Incident() {
     }
 
-    public Incident(int id, String serviceName, boolean isActive, String problemDescription, User user) {
-        this.id = id;
+    public Incident(String serviceName, boolean isActive, String problemDescription, User user) {
         this.serviceName = serviceName;
         this.isActive = isActive;
         this.problemDescription = problemDescription;

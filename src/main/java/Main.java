@@ -9,10 +9,6 @@ public class Main {
     public static Scanner scanner = new Scanner(System.in);
     public static List<String> queries = new ArrayList<>();
 
-    public static int incId = 0;
-    public static int userId = 3;
-    public static int profId = 3;
-
     static {
         queries.add("1: create incident");
         queries.add("2: subscribe service by id");
@@ -28,8 +24,11 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        insertData();
         UserHelper uh = new UserHelper();
+
+        if (uh.getAllUsers().size() == 0) {
+            insertData();
+        }
 
         User user;
         String userName;
@@ -59,27 +58,23 @@ public class Main {
         ProfileHelper ph = new ProfileHelper();
         ServiceHelper sh = new ServiceHelper();
 
-        UserRole user = new UserRole(1, "USER", "An ordinary user");
-        UserRole admin = new UserRole(2, "ADMIN", "Administrator");
-        UserRole superAdmin = new UserRole(3, "SUPER_ADMIN", "Super administrator, owner");
-        Profile profile1 = new Profile(1, "supadmin", "superable", "supadmin@mail.com", "+380555555555", "423243124");
-        Profile profile2 = new Profile(2, "admin", "adminable", "admin@mail.com", "+49777777666", "32423421");
-        Profile profile3 = new Profile(3, "test", "testov", "test@mail.com", "+49777777777", "4361246");
-        User user1 = new User(1, "supadmin", "supadmin", superAdmin, profile1);
-        User user2 = new User(2, "admin", "admin", admin, profile2);
-        User user3 = new User(3, "test", "test", user, profile3);
-        Service service1 = new Service(1, "test1", true, 12.5, 1);
-        Service service2 = new Service(2, "test2", true, 20.7, 2);
+        UserRole user = new UserRole("USER", "An ordinary user");
+        UserRole admin = new UserRole("ADMIN", "Administrator");
+        UserRole superAdmin = new UserRole("SUPER_ADMIN", "Super administrator, owner");
+        Profile profile1 = new Profile("supadmin", "superable", "supadmin@mail.com", "+380555555555", "423243124");
+        Profile profile2 = new Profile("admin", "adminable", "admin@mail.com", "+49777777666", "32423421");
+        User user1 = new User("supadmin", "supadmin", superAdmin, profile1);
+        User user2 = new User("admin", "admin", admin, profile2);
+        Service service1 = new Service("Repair computer", true, 12.5, 1);
+        Service service2 = new Service("Repair Windows", true, 20.7, 2);
 
         ush.addUserRole(user);
         ush.addUserRole(admin);
         ush.addUserRole(superAdmin);
         ph.addProfile(profile1);
         ph.addProfile(profile2);
-        ph.addProfile(profile3);
         uh.addUser(user1);
         uh.addUser(user2);
-        uh.addUser(user3);
         sh.addService(service1);
         sh.addService(service2);
     }
@@ -91,8 +86,8 @@ public class Main {
 
         while (true) {
             System.out.println("\nQueries list:");
-            for (int i = 0; i < queries.size(); i++) {
-                System.out.println(queries.get(i));
+            for (String query : queries) {
+                System.out.println(query);
             }
             System.out.println("0: exit");
             System.out.print("\nEnter query number: ");
@@ -138,8 +133,6 @@ public class Main {
                 case 8:
                     User newUser = new User();
                     Profile newProfile = new Profile();
-                    newUser.setId(++userId);
-                    newProfile.setId(++profId);
                     fillProfile(newProfile);
                     fillUser(newUser, newProfile);
                     ph.addProfile(newProfile);
@@ -223,7 +216,6 @@ public class Main {
 
     public static void createIncident(IncidentHelper ih, User user) {
         Incident incident = new Incident();
-        incident.setId(++incId);
         System.out.print("Enter the name of incident: ");
         incident.setServiceName(scanner.next());
         scanner.nextLine();
