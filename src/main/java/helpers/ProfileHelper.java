@@ -21,7 +21,9 @@ public class ProfileHelper {
 
     public Profile getProfileById(int id){
         Session session = sessionFactory.openSession();
-        return session.get(Profile.class, id);
+        Profile profile = session.get(Profile.class, id);
+        session.close();
+        return profile;
     }
 
     public void updateProfile(Profile profile){

@@ -28,7 +28,9 @@ public class IncidentHelper {
         Session session = sessionFactory.openSession();
         CriteriaQuery<Incident> criteriaQuery = session.getCriteriaBuilder().createQuery(Incident.class);
         criteriaQuery.from(Incident.class);
-        return session.createQuery(criteriaQuery).getResultList();
+        List<Incident> incidents = session.createQuery(criteriaQuery).getResultList();
+        session.close();
+        return incidents;
     }
 
     public List<Incident> getAllActiveIncidents(){
@@ -38,7 +40,9 @@ public class IncidentHelper {
         Root<Incident> root = criteriaQuery.from(Incident.class);
         criteriaQuery.select(root)
                 .where(cb.equal(root.get("isActive"), true));
-        return session.createQuery(criteriaQuery).getResultList();
+        List<Incident> incidents = session.createQuery(criteriaQuery).getResultList();
+        session.close();
+        return incidents;
     }
 
     public void closeIncident(int id){

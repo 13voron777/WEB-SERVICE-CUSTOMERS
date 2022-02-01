@@ -30,12 +30,16 @@ public class UserHelper {
         Session session = sessionFactory.openSession();
         CriteriaQuery<User> criteriaQuery = session.getCriteriaBuilder().createQuery(User.class);
         criteriaQuery.from(User.class);
-        return session.createQuery(criteriaQuery).getResultList();
+        List<User> users = session.createQuery(criteriaQuery).getResultList();
+        session.close();
+        return users;
     }
 
     public User getUserById(int id){
         Session session = sessionFactory.openSession();
-        return session.get(User.class, id);
+        User user = session.get(User.class, id);
+        session.close();
+        return user;
     }
 
     public void updateUser(User user){
